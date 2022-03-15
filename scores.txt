@@ -1,7 +1,0 @@
-Tentativas;Tempo em minutos;Jogador;Palavra
-1;0.04;gaa;asilo
-1;0.03;siqjsq;motim
-3;0.11;gabriel;valva
-1;0.02;aaaa;voraz
-2;0.13;aaa;pardo
-4;0.08;aaaaa;trama

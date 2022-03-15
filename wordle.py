@@ -140,6 +140,8 @@ def headers():
     if opt == '1':
         clear_console()
         player = input ("Informe o seu nome: ")
+        if player == '':
+            player = 'anônimo'
         start_game(player)
     if opt == '2':
         show_ranking()
