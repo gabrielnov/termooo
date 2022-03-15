@@ -123,8 +123,8 @@ def show_ranking():
 
 def show_help():
     clear_console()
-    f = open("help.txt")
-    for line in f:
+    file = open("help.txt")
+    for line in file:
         print(line, end='')
     input("\n\nAperte qualquer tecla para voltar ao menu...")
     headers()
