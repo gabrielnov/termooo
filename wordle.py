@@ -20,9 +20,9 @@ def find_word(word):
     return False
 
 def valid_guess(guess):
-    if(guess == ''):
+    if guess == '':
         return False
-    l_guess = list(guess)            
+    l_guess = list(guess)
     if len(l_guess) != 5:
         print("Digite uma palavra com apenas 5 letras")
         return False
@@ -34,8 +34,8 @@ def valid_guess(guess):
 
 def verify_guess(guess, word):
     l_word = list(word)
-    marks = ['x'] * 5
     l_guess = list(guess)
+    marks = ['x'] * 5
     for i in range(5):
         if l_guess[i] == l_word[i]:
             marks[i] = '^'
@@ -43,9 +43,6 @@ def verify_guess(guess, word):
             if j != i and l_guess[i] == l_word[j]:
                 if marks[i] != '^':
                     marks[i] = '!'
-        for j in range(5):
-            if marks[j] == '':
-                marks[j] = 'x'
     return marks
 
 def clear_console():
@@ -66,9 +63,18 @@ def output(guess, marks):
             print(f" | {lines[i][j].upper()}", end = '')
         print(' |')
 
+def save_ranking(total_time, player, tries):
+    try:
+        f = open('ranking.csv', 'x')
+        f.write('tries;minutes;player\n')
+    except FileExistsError:
+        f = open('ranking.csv', 'a')
+    minutes =total_time/60
+    f.write(f'{tries};{minutes:.2f};{player}\n')
+
 def finish_game(total_time, player, tries):
-    #salvar num arquivo
-    print(f"O jogador {player} venceu em {total_time} com {tries} tentativas!") 
+    save_ranking(total_time, player, tries)
+    headers()
 
 def run_game(start, player, word):
     for t in range(1, 5):
@@ -89,6 +95,16 @@ def start_game(player):
     word = draw_word()
     start = time.time()
     run_game(start, player, word)
+
+def sort_ranking(ranking):
+    pass
+
+def show_ranking():
+    ranking = open('ranking.csv')
+    sort_ranking(ranking)
+    for line in ranking:
+        tries, time, player = line.split(';')
+        print(f'\t{tries: <5} | {time: <9} | {player}', end='')
 
 def headers():
     print("=== BEM VINDO AO TERM.OOO ===")
