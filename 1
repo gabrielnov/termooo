@@ -2,11 +2,65 @@ from random import randint
 import os
 import time
 
+content = []
+def draw_word():
+    f = open('words.txt')
+    for line in f:
+        if len(list(line)) == 6:
+            content.append(line.replace("\n", ""))
+    f.close()
+    word = content[randint(0, len(content))]
+    print("palavra sorteada: ", word)
+    return word
+
+def find_word(word):
+    for w in content:
+        if word == w:
+            return True
+    return False
+
+def valid_guess(guess):
+    if guess == '':
+        return False
+    l_guess = list(guess)
+    if len(l_guess) != 5:
+        print("Digite uma palavra com apenas 5 letras")
+        return False
+    elif not find_word(guess):
+        print("Palavra inválida, tente novamente")
+        return False
+    else:
+        return True
+
+def verify_guess(guess, word):
+    l_word = list(word)
+    l_guess = list(guess)
+    marks = ['x'] * 5
+    for i in range(5):
+        if l_guess[i] == l_word[i]:
+            marks[i] = '^'
+        for j in range(5):
+            if j != i and l_guess[i] == l_word[j]:
+                if marks[i] != '^':
+                    marks[i] = '!'
+    return marks
+
 def clear_console():
     command = 'clear'
     if os.name in ('nt', 'dos'):
         command = 'cls'
     os.system(command)
+
+def output(guess, marks):
+    clear_console()
+    lines.append(guess)
+    lines.append(marks)
+    for i in range(len(lines)):
+        if i % 2 == 0:
+            print()
+        for j in range(5):
+            print(f" | {lines[i][j].upper()}", end = '')
+        print(' |')
 
 def save_ranking(total_time, player, tries, word):
     player = player[0:20]
@@ -26,52 +80,9 @@ def finish_game(total_time, player, tries, word):
     input("Aperte qualquer tecla para voltar ao menu...")
     headers()
 
-def output(guess, marks):
-    clear_console()
-    lines.append(guess)
-    lines.append(marks)
-    for i in range(len(lines)):
-        if i % 2 == 0:
-            print()
-        for j in range(5):
-            print(f" | {lines[i][j].upper()}", end = '')
-        print(' |')
-
-def verify_guess(guess, word):
-    l_word = list(word)
-    l_guess = list(guess)
-    marks = ['x'] * 5
-    for i in range(5):
-        if l_guess[i] == l_word[i]:
-            marks[i] = '^'
-        for j in range(5):
-            if j != i and l_guess[i] == l_word[j]:
-                if marks[i] != '^':
-                    marks[i] = '!'
-    return marks
-
-def valid_guess(guess):
-    if guess == '':
-        return False
-    l_guess = list(guess)
-    if len(l_guess) != 5:
-        print("Digite uma palavra com apenas 5 letras")
-        return False
-    elif not find_word(guess):
-        print("Palavra inválida, tente novamente")
-        return False
-    else:
-        return True
-
-def find_word(word):
-    for w in content:
-        if word == w:
-            return True
-    return False
-
 def run_game(start, player, word):
-    for t in range(1, 7):
-        print(f"\n\t === Tentativa {t}/6 ===")
+    for t in range(1, 6):
+        print(f"\n\t === Tentativa {t}/5 ===")
         guess = ''
         while not valid_guess(guess):
             guess = input("\nSua tentativa: ")
@@ -86,17 +97,6 @@ def run_game(start, player, word):
     input("\n\nAperte qualquer tecla para voltar ao menu...")
     headers()
 
-content = []
-def draw_word():
-    f = open('words.txt')
-    for line in f:
-        if len(list(line)) == 6:
-            content.append(line.replace("\n", ""))
-    f.close()
-    word = content[randint(0, len(content))]
-    print("palavra sorteada: ", word)
-    return word
-
 def start_game(player):
     global lines
     lines = []
@@ -108,24 +108,9 @@ def start_game(player):
 def show_ranking():
     scores = open('scores.txt')
     print()
-    first_line = True 
-    for line in scores:
+    for line in ranking:
         tries, time, player, word = line.split(';')
-        if first_line:
-            print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
-            print('\t', end='')
-            print('-' * 64)
-            first_line = False
-        else:
-            print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
-    input("\n\nAperte qualquer tecla para voltar ao menu...")
-    headers()
-
-def show_help():
-    clear_console()
-    f = open("help.txt")
-    for line in f:
-        print(line, end='')
+        print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
     input("\n\nAperte qualquer tecla para voltar ao menu...")
     headers()
 

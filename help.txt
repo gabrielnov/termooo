@@ -1,0 +1,17 @@
+ 
+
+ Descubra a palavra certa em 6 tentativas. 
+ Depois de cada tentativa, as peças mostram o quão perto você está da solução.
+
+
+  | T | I | N | T | A |
+  | x | ! | x | x | ^ |
+
+
+  A letra A faz parte da palavra e está na posição correta (^).
+
+  A letra I faz parte da palavra mas em outra posição (!)
+
+  As letras T e N não fazem parte da palavra.
+
+  As palavras podem possuir letras repetidas.
