@@ -65,10 +65,10 @@ def output(guess, marks):
 def save_ranking(total_time, player, tries, word):
     player = player[0:20]
     try:
-        f = open('ranking.csv', 'x')
+        f = open('scores.txt', 'x')
         f.write('Tentativas;Tempo em minutos;Jogador;Palavra\n')
     except FileExistsError:
-        f = open('ranking.csv', 'a')
+        f = open('scores.txt', 'a')
     minutes =total_time/60
     f.write(f'{tries};{minutes:.2f};{player};{word}\n')
 
@@ -81,11 +81,11 @@ def finish_game(total_time, player, tries, word):
     headers()
 
 def run_game(start, player, word):
-    for t in range(1, 5):
-        print(f"Tentativa {t}/5")
+    for t in range(1, 6):
+        print(f"\n\t === Tentativa {t}/5 ===")
         guess = ''
         while not valid_guess(guess):
-            guess = input("Sua tentativa: ")
+            guess = input("\nSua tentativa: ")
         marks = verify_guess(guess, word)
         output(list(guess), marks)
 
@@ -93,6 +93,9 @@ def run_game(start, player, word):
             total_time = time.time() - start
             finish_game(total_time, player, t, word)
             return
+    print(f'\n\nFim das tentativas. A palavra era {word}.')
+    input("\n\nAperte qualquer tecla para voltar ao menu...")
+    headers()
 
 def start_game(player):
     global lines
@@ -103,11 +106,18 @@ def start_game(player):
     run_game(start, player, word)
 
 def show_ranking():
-    ranking = open('ranking.csv')
+    scores = open('scores.txt')
     print()
-    for line in ranking:
+    first_line = True 
+    for line in scores:
         tries, time, player, word = line.split(';')
-        print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
+        if first_line:
+            print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
+            print('\t', end='')
+            print('-' * 64)
+            first_line = False
+        else:
+            print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
     input("\n\nAperte qualquer tecla para voltar ao menu...")
     headers()
 
@@ -115,7 +125,7 @@ def headers():
     clear_console()
     print("=== BEM VINDO AO TERM.OOO ===")
     print("\n(1) Iniciar novo jogo")
-    print("(2) Visualizar ranking")
+    print("(2) Visualizar últimas partidas")
     print("(3) Ajuda")
     print("\n(0) Sair")
     opt = input("Opção: ")
