@@ -9,14 +9,11 @@ def clear_console():
     os.system(command)
 
 def save_ranking(total_time, player, tries, word):
-    player = player[0:20]
-    try:
-        f = open('scores.txt', 'x')
-        f.write('Tentativas;Tempo em minutos;Jogador;Palavra\n')
-    except FileExistsError:
-        f = open('scores.txt', 'a')
+    f = open('scores.txt', 'x')
     minutes =total_time/60
+    player = player[0:20]
     f.write(f'{tries};{minutes:.2f};{player};{word}\n')
+    f.close()
 
 def finish_game(total_time, player, tries, word):
     save_ranking(total_time, player, tries, word)
@@ -94,7 +91,6 @@ def draw_word():
             content.append(line.replace("\n", ""))
     f.close()
     word = content[randint(0, len(content))]
-    print("palavra sorteada: ", word)
     return word
 
 def start_game(player):
@@ -107,7 +103,6 @@ def start_game(player):
 
 def show_ranking():
     scores = open('scores.txt')
-    print()
     first_line = True 
     for line in scores:
         tries, time, player, word = line.split(';')
