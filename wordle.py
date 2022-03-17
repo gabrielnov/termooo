@@ -9,7 +9,7 @@ def clear_console():
     os.system(command)
 
 def save_ranking(total_time, player, tries, word):
-    f = open('scores.txt', 'x')
+    f = open('scores.txt', 'a')
     minutes =total_time/60
     player = player[0:20]
     f.write(f'{tries};{minutes:.2f};{player};{word}\n')
@@ -67,11 +67,14 @@ def find_word(word):
     return False
 
 def run_game(start, player, word):
+    print(f'palavra sorteada: {word}')
     for t in range(1, 7):
         print(f"\n\t === Tentativa {t}/6 ===")
         guess = ''
         while not valid_guess(guess):
             guess = input("\nSua tentativa: ")
+            guess = guess.lower()
+            guess = guess.strip()
         marks = verify_guess(guess, word)
         output(list(guess), marks)
 
@@ -102,14 +105,14 @@ def start_game(player):
     run_game(start, player, word)
 
 def show_ranking():
-    scores = open('scores.txt')
+    scores = open('scores.txt', 'r')
     first_line = True 
     for line in scores:
         tries, time, player, word = line.split(';')
         if first_line:
             print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
             print('\t', end='')
-            print('-' * 64)
+            print('-' * 65)
             first_line = False
         else:
             print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
