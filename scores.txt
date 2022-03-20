@@ -1,3 +1,4 @@
 tentativas;tempo;jogador;palavra
 5;0.46;gabriel;hímen
 2;0.21;gabriel;corei
+4;0.24;Gabriel!;emane

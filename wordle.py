@@ -47,31 +47,25 @@ def verify_guess(guess, word):
                     marks[i] = '!'
     return marks
 
-def valid_guess(guess):
+def valid_guess(guess, words):
     if guess == '':
         return False
     l_guess = list(guess)
     if len(l_guess) != 5:
         print("Digite uma palavra com apenas 5 letras")
         return False
-    elif not find_word(guess):
-        print("Palavra inválida, tente novamente")
-        return False
-    else:
-        return True
-
-def find_word(word):
-    for w in content:
-        if word == w:
+    for w in words:
+        if guess.upper() == w.upper():            
             return True
+    print(f"\nPalavra {guess} inválida. Tente novamente.")    
     return False
 
-def run_game(start, player, word):
+def run_game(start, player, word, words):
     print(f'palavra sorteada: {word}')
     for t in range(1, 7):
         print(f"\n\t === Tentativa {t}/6 ===")
         guess = ''
-        while not valid_guess(guess):
+        while not valid_guess(guess, words):
             guess = input("\nSua tentativa: ")
             guess = guess.lower()
             guess = guess.strip()
@@ -86,23 +80,23 @@ def run_game(start, player, word):
     input("\n\nAperte qualquer tecla para voltar ao menu...")
     headers()
 
-content = []
-def draw_word():
+def generate_words():
     f = open('words.txt', 'r', encoding='utf-8')
-    for line in f:
-        if len(list(line)) == 6:
-            content.append(line.replace("\n", ""))
-    f.close()
-    word = content[randint(0, len(content))]
+    words = f.read().splitlines()
+    return words
+
+def draw_word(words):    
+    word = words[randint(0, len(words))]
     return word
 
 def start_game(player):
     global lines
     lines = []
     clear_console()
-    word = draw_word()
+    words = generate_words()
+    word = draw_word(words)
     start = time.time()
-    run_game(start, player, word)
+    run_game(start, player, word, words)
 
 def show_ranking():
     scores = open('scores.txt', 'r', encoding='utf-8')    
