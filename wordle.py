@@ -9,7 +9,7 @@ def clear_console():
     os.system(command)
 
 def save_ranking(total_time, player, tries, word):
-    f = open('scores.txt', 'a')
+    f = open('scores.txt', 'a', encoding='utf-8')
     minutes =total_time/60
     player = player[0:20]
     f.write(f'{tries};{minutes:.2f};{player};{word}\n')
@@ -88,7 +88,7 @@ def run_game(start, player, word):
 
 content = []
 def draw_word():
-    f = open('words.txt')
+    f = open('words.txt', 'r', encoding='utf-8')
     for line in f:
         if len(list(line)) == 6:
             content.append(line.replace("\n", ""))
@@ -105,7 +105,7 @@ def start_game(player):
     run_game(start, player, word)
 
 def show_ranking():
-    scores = open('scores.txt', 'r')
+    scores = open('scores.txt', 'r', encoding='utf-8')    
     first_line = True 
     for line in scores:
         tries, time, player, word = line.split(';')
@@ -116,15 +116,17 @@ def show_ranking():
             first_line = False
         else:
             print(f'\t{tries: <11} | {time: <17} | {player: <20} | {word}', end='')
+    scores.close()
     input("\n\nAperte qualquer tecla para voltar ao menu...")
     headers()
 
 def show_help():
     clear_console()
-    file = open("help.txt")
+    file = open("help.txt", 'r', encoding='utf-8')    
     for line in file:
         print(line, end='')
     input("\n\nAperte qualquer tecla para voltar ao menu...")
+    file.close()
     headers()
 
 def headers():
