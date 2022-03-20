@@ -1,4 +1,2 @@
-tentativas;tempo;jogador;palavra
-5;0.46;gabriel;hímen
-2;0.21;gabriel;corei
-4;0.24;Gabriel!;emane
+tentativas;tempo (HH:MM:SS);jogador;palavra
+1;00:00:34;gabriel;TORCE

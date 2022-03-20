@@ -10,16 +10,15 @@ def clear_console():
 
 def save_ranking(total_time, player, tries, word):
     f = open('scores.txt', 'a', encoding='utf-8')
-    minutes =total_time/60
+    total_time = time.strftime('%H:%M:%S', time.gmtime(total_time))
     player = player[0:20]
-    f.write(f'{tries};{minutes:.2f};{player};{word}\n')
+    f.write(f'{tries};{total_time};{player};{word}\n')
     f.close()
 
 def finish_game(total_time, player, tries, word):
     save_ranking(total_time, player, tries, word)
-
     clear_console()
-    print(f'\n\t\t === Parabéns! === \n\n {player}, você acertou o termo {word.upper()} com {tries} tentativas\n\n')
+    print(f'\n\t\t === Parabéns! === \n\n {player}, você acertou o termo {word} com {tries} tentativas\n\n')
     input("Aperte qualquer tecla para voltar ao menu...")
     headers()
 
@@ -31,7 +30,7 @@ def output(guess, marks):
         if i % 2 == 0:
             print()
         for j in range(5):
-            print(f" | {lines[i][j].upper()}", end = '')
+            print(f" | {lines[i][j]}", end = '')
         print(' |')
 
 def verify_guess(guess, word):
@@ -55,7 +54,7 @@ def valid_guess(guess, words):
         print("Digite uma palavra com apenas 5 letras")
         return False
     for w in words:
-        if guess.upper() == w.upper():            
+        if guess == w.upper():            
             return True
     print(f"\nPalavra {guess} inválida. Tente novamente.")    
     return False
@@ -67,7 +66,7 @@ def run_game(start, player, word, words):
         guess = ''
         while not valid_guess(guess, words):
             guess = input("\nSua tentativa: ")
-            guess = guess.lower()
+            guess = guess.upper()
             guess = guess.strip()
         marks = verify_guess(guess, word)
         output(list(guess), marks)
@@ -96,7 +95,7 @@ def start_game(player):
     words = generate_words()
     word = draw_word(words)
     start = time.time()
-    run_game(start, player, word, words)
+    run_game(start, player, word.upper(), words)
 
 def show_ranking():
     scores = open('scores.txt', 'r', encoding='utf-8')    
@@ -135,7 +134,7 @@ def headers():
         clear_console()
         player = input ("Informe o seu nome: ")
         if player == '':
-            player = 'anônimo'
+            player = 'Anônimo'
         start_game(player)
     if opt == '2':
         show_ranking()
