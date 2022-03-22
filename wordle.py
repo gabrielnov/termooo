@@ -60,7 +60,7 @@ def valid_guess(guess, words):
     return False
 
 def run_game(start, player, word, words):
-    print(f'palavra sorteada: {word}')
+    #print(f'palavra sorteada: {word}')
     for t in range(1, 7):
         print(f"\n\t === Tentativa {t}/6 ===")
         guess = ''
