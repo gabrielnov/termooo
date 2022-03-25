@@ -80,7 +80,7 @@ def run_game(start, player, word, words):
     headers()
 
 def generate_words():
-    f = open('words.txt', 'r', encoding='utf-8')
+    f = open('lista_sem_acentos.txt', 'r', encoding='utf-8')
     words = f.read().splitlines()
     return words
 

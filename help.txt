@@ -15,3 +15,5 @@
   As letras T e N não fazem parte da palavra.
 
   As palavras podem possuir letras repetidas.
+
+  ATENÇÃO: Todas as palavras devem ser escritas SEM acentuação. A letra Ç é permitida e não é considerada igual ao C normal.
