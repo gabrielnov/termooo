@@ -2,9 +2,11 @@
 
 ### Run
 
-> python wordle.py
-<br>
+------
 
+>python wordle.py
+
+------
 
 ### Como jogar
 <br>
