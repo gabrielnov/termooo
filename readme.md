@@ -1,11 +1,10 @@
  ## Wordle / Termoo
-------
 
 ### Run
 
 > python wordle.py
 <br>
-------
+
 
 ### Como jogar
 <br>
